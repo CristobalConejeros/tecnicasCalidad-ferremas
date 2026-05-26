@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ferremas - Tu Ferretería de Confianza</title>
+    <link rel="stylesheet" href="../style.css">
+
+    <!-- Deja un div vacío donde inyectarás el script -->
+    <div id="paypal-sdk-container"></div>
+
+</head>
+<body>
+<div class="container">
+
+
+    <nav class="navbar">
+        <div class="logo">🔨 FERREMAS</div>
+        <div class="nav-buttons">
+            <span class="user-welcome" id="userWelcome" style="display: none;"></span>
+            <button class="nav-btn" onclick="showView('home')">Inicio</button>
+            <button class="nav-btn" onclick="showView('products')">Productos</button>
+            <button class="nav-btn" onclick="showView('cart')">
+                Carrito <span class="cart-badge" id="cartBadge">0</span>
+            </button>
+            <button class="nav-btn" id="logoutBtn" onclick="logout()" style="display: none;">Cerrar Sesión</button>
+        </div>
+    </nav>
+
+    <!-- HOME -->
+    <div id="home" class="view active">
+        <div class="welcome-section">
+            <h1 id="homeWelcome">Bienvenido a Ferremas</h1>
+            <p>Tu ferretería de confianza con los mejores productos y precios</p>
+            <button class="btn" onclick="showView('products')">Ver Productos</button>
+        </div>
+    </div>
+
+    <!-- Productos -->
+    <div id="products" class="view">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h2>Nuestros Productos</h2>
+            <select id="currencySelect" onchange="changeCurrency()" class="select-custom" style="margin-left: 10px;">
+                <option value="CLP">CLP (Pesos)</option>
+                <option value="USD">USD (Dólar)</option>
+                <option value="EUR">EUR (Euro)</option>
+            </select>
+        </div>
+
+
+        <div style="display: flex; gap: 20px;">
+            <!-- Filtro lateral -->
+            <div id="filterPanel" style="width: 200px;">
+                <h3>Categorías</h3>
+                <ul id="categoryFilter" style="list-style: none; padding: 0;">
+                    <!-- Se llenará dinámicamente -->
+                </ul>
+                <button onclick="filterByCategory(null)" class="btn btn-secondary" style="margin-top: 10px;">Mostrar Todos</button>
+            </div>
+
+            <!-- Lista de productos -->
+            <div id="productGrid" class="product-grid" style="flex-grow: 1;">
+                <!-- Los productos se cargarán aquí dinámicamente -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Login -->
+    <div id="login" class="view">
+        <h2>Iniciar Sesión</h2>
+        <div class="error-message" id="loginError"></div>
+        <form onsubmit="login(event)">
+            <div class="form-group">
+                <label for="loginEmail">Correo Electrónico:</label>
+                <input type="text" id="loginEmail" required>
+            </div>
+            <div class="form-group">
+                <label for="loginPassword">Contraseña:</label>
+                <input type="password" id="loginPassword" required>
+            </div>
+            <button type="submit" class="btn">Iniciar Sesión</button>
+            <button type="button" class="btn btn-secondary" onclick="showView('register')">Crear Cuenta</button>
+        </form>
+    </div>
+
+    <!-- Crear Usuario -->
+    <div id="register" class="view">
+        <h2>Crear Nueva Cuenta</h2>
+        <div class="error-message" id="registerError"></div>
+        <div class="success-message" id="registerSuccess"></div>
+        <form onsubmit="register(event)">
+            <div class="form-group">
+                <label for="registerRut">RUT:</label>
+                <input type="text" id="registerRut" placeholder="12345678-9" required>
+            </div>
+            <div class="form-group">
+                <label for="registerName">Nombre Completo:</label>
+                <input type="text" id="registerName" required>
+            </div>
+            <div class="form-group">
+                <label for="registerPhone">Teléfono:</label>
+                <input type="tel" id="registerPhone" placeholder="+56912345678">
+            </div>
+            <div class="form-group">
+                <label for="registerEmail">Correo Electrónico:</label>
+                <input type="email" id="registerEmail" required>
+            </div>
+            <div class="form-group">
+                <label for="registerPassword">Contraseña:</label>
+                <input type="password" id="registerPassword" required>
+            </div>
+            <button type="submit" class="btn">Crear Cuenta</button>
+            <button type="button" class="btn btn-secondary" onclick="showView('login')">Ya tengo cuenta</button>
+        </form>
+    </div>
+
+    <!-- Carrito -->
+    <div id="cart" class="view">
+        <h2>Carrito de Compras</h2>
+        <div id="cartItems">
+            <p style="text-align: center; color: #666; padding: 50px;">Tu carrito está vacío</p>
+        </div>
+        <div class="cart-total" id="cartTotal" style="display: none;">
+            Total: $0
+        </div>
+        <button class="btn btn-success" id="btnPay" style="display: none;" onclick="processPayment()">Pagar</button>
+        <div id="paypal-button-container" style="margin-top: 20px;"></div>
+    </div>
+</div>
+<div id="customSuccess" class="success-alert">
+    <span id="successMessage"></span>
+</div>
+<script src="script.js"></script>
+</body>
+</html>

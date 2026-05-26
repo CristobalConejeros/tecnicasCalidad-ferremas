@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ferremas - Tu Ferretería de Confianza</title>
+    <link rel="stylesheet" href="../style.css" />
+    <script src="https://www.paypal.com/sdk/js?client-id=AWm2rv3u7f9sU8bnxEfgS86JjwvFGSRehtM5XyYf3XQtMTWW6COErZe2bjJkpmlHfqUW5DZgfOYT7EfF&currency=USD"></script>
+</head>
+<body>
+<div class="container">
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="logo">🔨 FERREMAS</div>
+        <div class="nav-buttons">
+            <span class="user-welcome" id="userWelcome" style="display: none;"></span>
+            <button class="nav-btn" onclick="showView('home')">Inicio</button>
+            <button class="nav-btn" onclick="window.location.href='../CreateUserAdm/index.html'">Usuarios</button>
+            <!--<button class="nav-btn" onclick="showView('products')">Productos</button>-->
+            <button class="nav-btn" id="logoutBtn" onclick="logout()" style="display: none;">Cerrar Sesión</button>
+        </div>
+    </nav>
+
+    <!-- HOME -->
+    <div id="home" class="view active">
+        <div class="welcome-section">
+            <h1 id="homeWelcome">Bienvenido a Ferremas</h1>
+            <p>Tu ferretería de confianza con los mejores productos y precios</p>
+
+        </div>
+    </div>
+
+    <!-- LISTADO PRODUCTOS (Administrador) -->
+    <div id="products" class="view">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h2>Nuestros Productos</h2>
+            <button class="btn" id="btnRegisterProduct" onclick="showView('registerProduct')" style="display: none;">
+                Registrar Productos
+            </button>
+        </div>
+
+        <div id="productGrid" class="product-grid">
+            <!-- Productos se cargarán aquí dinámicamente -->
+        </div>
+    </div>
+
+
+    <!-- REGISTRO PRODUCTO -->
+    <div id="registerProduct" class="view">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h2>Registrar Nuevo Producto</h2>
+            <button type="button" class="btn btn-secondary" onclick="showView('products')">Volver</button>
+        </div>
+        <div class="error-message" id="productError"></div>
+        <div class="success-message" id="productSuccess"></div>
+        <form id="productForm" onsubmit="createProduct(event)">
+            <br>
+            <div class="form-group">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" required />
+            </div>
+            <div class="form-group">
+                <label for="categoria">Categoría:</label>
+                <select id="categoria" required>
+                    <!-- Opciones cargadas dinámicamente -->
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="descripcion">Descripción:</label>
+                <textarea id="descripcion" rows="5" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="marca">Marca:</label>
+                <input type="text" id="marca" required />
+            </div>
+            <div class="form-group">
+                <label for="stock">Stock:</label>
+                <input type="number" id="stock" min="0" required />
+            </div>
+            <div class="form-group">
+                <label for="precio">Precio:</label>
+                <input type="number" id="precio" step="0.01" min="0" required />
+            </div>
+            <div class="form-group">
+                <label for="estado">Estado:</label>
+                <input type="text" id="estado" required />
+            </div>
+            <div class="form-group">
+                <label for="imagen">Nombre Imagen (archivo en carpeta Archivos):</label>
+                <input type="text" id="imagen" />
+            </div>
+            <button type="submit" class="btn">Registrar Producto</button>
+        </form>
+    </div>
+
+    <!-- EDICIÓN PRODUCTO -->
+    <div id="editProductView" class="view">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h2>Editar Producto</h2>
+            <button type="button" class="btn btn-secondary" onclick="showView('products')">Volver</button>
+        </div>
+        <div class="error-message" id="editProductError"></div>
+        <div class="success-message" id="editProductSuccess"></div>
+        <form id="editProductForm" onsubmit="updateProduct(event)">
+            <input type="hidden" id="editId" />
+            <br>
+
+            <div class="form-group">
+                <label for="editNombre">Nombre:</label>
+                <input type="text" id="editNombre" required />
+            </div>
+            <div class="form-group">
+                <label for="editCategoria">Categoría:</label>
+                <select id="editCategoria" required>
+                    <!-- Opciones cargadas dinámicamente -->
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="editDescripcion">Descripción:</label>
+                <textarea id="editDescripcion" rows="5" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="editMarca">Marca:</label>
+                <input type="text" id="editMarca" required />
+            </div>
+            <div class="form-group">
+                <label for="editStock">Stock:</label>
+                <input type="number" id="editStock" min="0" required />
+            </div>
+            <div class="form-group">
+                <label for="editPrecio">Precio:</label>
+                <input type="number" id="editPrecio" step="0.01" min="0" required />
+            </div>
+            <div class="form-group">
+                <label for="editEstado">Estado:</label>
+                <input type="text" id="editEstado" required />
+            </div>
+            <div class="form-group">
+                <label for="editImagen">Imagen:</label>
+                <input type="text" id="editImagen" />
+            </div>
+            <button type="submit" class="btn btn-success">Guardar Cambios</button>
+
+        </form>
+    </div>
+
+
+    <!-- REGISTRO USUARIO -->
+    <div id="register" class="view">
+        <h2>Crear Nueva Cuenta</h2>
+        <div class="error-message" id="registerError"></div>
+        <div class="success-message" id="registerSuccess"></div>
+        <form onsubmit="register(event)">
+            <div class="form-group">
+                <label for="registerRut">RUT:</label>
+                <input type="text" id="registerRut" placeholder="12345678-9" required />
+            </div>
+            <div class="form-group">
+                <label for="registerName">Nombre Completo:</label>
+                <input type="text" id="registerName" required />
+            </div>
+            <div class="form-group">
+                <label for="registerPhone">Teléfono:</label>
+                <input type="tel" id="registerPhone" placeholder="+56912345678" />
+            </div>
+            <div class="form-group">
+                <label for="registerEmail">Correo Electrónico:</label>
+                <input type="email" id="registerEmail" required />
+            </div>
+            <div class="form-group">
+                <label for="registerPassword">Contraseña:</label>
+                <input type="password" id="registerPassword" required />
+            </div>
+            <button type="submit" class="btn">Crear Cuenta</button>
+            <button type="button" class="btn btn-secondary" onclick="showView('login')">Ya tengo cuenta</button>
+        </form>
+    </div>
+
+</div>
+
+<!-- Notificación -->
+<div id="customSuccess" class="success-alert" style="display:none;">
+    <span id="successMessage"></span>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

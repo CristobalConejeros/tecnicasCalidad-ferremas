@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ferremas - Crear Cuenta</title>
+    <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<div class="container">
+    <nav class="navbar">
+        <div class="logo">🔨 FERREMAS</div>
+        <div class="nav-buttons">
+            <button class="nav-btn" onclick="window.location.href='../Login/index.html'">Iniciar Sesión</button>
+        </div>
+    </nav>
+
+    <!-- Crear Usuario -->
+    <div id="register" class="view active">
+        <h2>Crear Nueva Cuenta</h2>
+        <div class="error-message" id="registerError"></div>
+        <div class="success-message" id="registerSuccess"></div>
+        <form onsubmit="register(event)">
+            <div class="form-group">
+                <label for="registerRut">RUT:</label>
+                <input type="text" id="registerRut" placeholder="12345678-9" required />
+            </div>
+            <div class="form-group">
+                <label for="registerName">Nombre Completo:</label>
+                <input type="text" id="registerName" required />
+            </div>
+            <div class="form-group">
+                <label for="registerPhone">Teléfono:</label>
+                <input type="tel" id="registerPhone" placeholder="+56912345678" />
+            </div>
+            <div class="form-group">
+                <label for="registerEmail">Correo Electrónico:</label>
+                <input type="email" id="registerEmail" required />
+            </div>
+            <div class="form-group">
+                <label for="registerPassword">Contraseña:</label>
+                <input type="password" id="registerPassword" required />
+            </div>
+            <button type="submit" class="btn">Crear Cuenta</button>
+            <button type="button" class="btn btn-secondary" onclick="window.location.href='../Login/index.html'">Ya tengo cuenta</button>
+        </form>
+    </div>
+</div>
+
+<div id="customSuccess" class="success-alert" style="display:none;">
+    <span id="successMessage"></span>
+</div>
+
+<script src="../script.js"></script>
+</body>
+</html>

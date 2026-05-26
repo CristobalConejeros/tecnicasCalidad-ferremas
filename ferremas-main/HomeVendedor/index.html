@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ferremas - Vendedor</title>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<div class="container">
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="logo">🔨 FERREMAS</div>
+    <div class="nav-buttons">
+      <span id="userWelcome" class="user-welcome" style="display: none;"></span>
+      <button class="nav-btn" onclick="showView('home')">Inicio</button>
+      <button class="nav-btn" onclick="showView('orders')">Pedidos</button>
+      <button class="nav-btn" id="logoutBtn" onclick="logout()">Cerrar Sesión</button>
+    </div>
+  </nav>
+
+  <!-- HOME (Bienvenida) -->
+  <div id="home" class="view active">
+    <div class="welcome-section">
+      <h1 id="homeWelcome">Bienvenido a Ferremas</h1>
+      <p>Panel exclusivo para vendedores. Aquí puedes ver y aprobar pedidos.</p>
+    </div>
+  </div>
+
+  <!-- PEDIDOS -->
+  <div id="orders" class="view" style="display: none;">
+    <h2>Lista de Pedidos</h2>
+    <div id="ordersContainer">
+      <!-- Aquí se cargarán dinámicamente los pedidos -->
+    </div>
+  </div>
+
+</div>
+
+<!-- Scripts -->
+<script>
+  function showView(viewId) {
+    document.querySelectorAll('.view').forEach(v => v.style.display = 'none');
+    document.getElementById(viewId).style.display = 'block';
+  }
+
+  function logout() {
+    localStorage.removeItem('currentUser');
+    window.location.href = '../Login/';
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const user = JSON.parse(localStorage.getItem('currentUser'));
+    if (!user || user.rol !== 'Vendedor') {
+      alert('Acceso no autorizado');
+      window.location.href = '../Login/';
+      return;
+    }
+
+    document.getElementById('userWelcome').textContent = `Bienvenido, ${user.nombre}`;
+    document.getElementById('userWelcome').style.display = 'inline';
+    document.getElementById('logoutBtn').style.display = 'inline';
+
+    document.getElementById('homeWelcome').textContent = `Bienvenido ${user.nombre} a Ferremas`;
+  });
+</script>
+</body>
+</html>

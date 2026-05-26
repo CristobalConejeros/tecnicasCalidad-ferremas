@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ferremas - Tu Ferretería de Confianza</title>
+    <link rel="stylesheet" href="../style.css">
+    <script src="https://www.paypal.com/sdk/js?client-id=AWm2rv3u7f9sU8bnxEfgS86JjwvFGSRehtM5XyYf3XQtMTWW6COErZe2bjJkpmlHfqUW5DZgfOYT7EfF&currency=USD"></script>
+
+
+</head>
+<body>
+<div class="container">
+    <nav class="navbar">
+        <div class="logo">🔨 FERREMAS</div>
+        <div class="nav-buttons">
+            <span class="user-welcome" id="userWelcome" style="display: none;"></span>
+            <button class="nav-btn" id="logoutBtn" onclick="logout()" style="display: none;">Cerrar Sesión</button>
+        </div>
+    </nav>
+
+    <!-- Login -->
+    <div id="login" class="view active">
+        <h2>Iniciar Sesión</h2>
+        <div class="error-message" id="loginError"></div>
+        <form onsubmit="login(event)">
+            <div class="form-group">
+                <label for="loginEmail">Correo Electrónico:</label>
+                <input type="text" id="loginEmail" required>
+            </div>
+            <div class="form-group">
+                <label for="loginPassword">Contraseña:</label>
+                <input type="password" id="loginPassword" required>
+            </div>
+            <button type="submit" class="btn">Iniciar Sesión</button>
+            <button type="button" class="btn btn-secondary" onclick="createUser()">Crear Cuenta</button>
+        </form>
+    </div>
+</div>
+<div id="customSuccess" class="success-alert">
+    <span id="successMessage"></span>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
